@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Automated Site Provisioning — Mani Golchin</title>
+  <meta name="description" content="Automated website provisioning for applicant onboarding. Forward an email, get a fully configured site.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #0f1117;
+      --bg-card: #13151d;
+      --border: #1e2130;
+      --text-primary: #e8eaf0;
+      --text-secondary: #8b8fa3;
+      --text-muted: #5a5e72;
+      --accent: #00e676;
+      --accent-dim: rgba(0, 230, 118, 0.1);
+      --accent-glow: rgba(0, 230, 118, 0.15);
+      --accent-secondary: #A855F7;
+      --accent-secondary-dim: rgba(168, 85, 247, 0.1);
+      --gradient-accent: linear-gradient(135deg, #A855F7, #7C3AED);
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    ::selection { background: rgba(168, 85, 247, 0.25); color: #fff; }
+
+    a { color: var(--accent-secondary); text-decoration: none; transition: color 0.2s ease; }
+    a:hover { color: #C084FC; }
+    a:focus-visible { outline: 2px solid var(--accent-secondary); outline-offset: 2px; border-radius: 2px; }
+
+    /* Nav */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0 2rem; transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    .nav.scrolled {
+      background: rgba(10, 10, 15, 0.85);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 1px 0 var(--border);
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; height: 64px;
+    }
+    .nav-logo { font-weight: 700; font-size: 1.125rem; color: var(--text-primary); letter-spacing: -0.02em; }
+    .nav-logo span { color: var(--accent); }
+    .nav-back {
+      display: inline-flex; align-items: center; gap: 0.375rem;
+      font-size: 0.875rem; font-weight: 500; color: var(--text-secondary);
+    }
+    .nav-back:hover { color: var(--text-primary); }
+    .nav-back svg { width: 16px; height: 16px; }
+
+    /* Sections */
+    section { padding: 6rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500;
+      color: var(--accent-secondary); text-transform: uppercase; letter-spacing: 0.15em;
+      margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;
+    }
+    .section-label::before {
+      content: ''; display: inline-block; width: 12px; height: 1px; background: var(--accent-secondary);
+    }
+    .section-title { font-size: 2rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 1rem; line-height: 1.2; }
+    .section-subtitle { color: var(--text-secondary); font-size: 1.0625rem; max-width: 560px; line-height: 1.7; }
+
+    /* Hero */
+    .hero {
+      min-height: 60vh; display: flex; align-items: center;
+      position: relative; padding-top: 64px;
+    }
+    .hero-bg { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(30, 33, 48, 0.3) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(30, 33, 48, 0.3) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 70%);
+    }
+    .hero-glow {
+      position: absolute; width: 600px; height: 600px; border-radius: 50%;
+      top: 10%; left: 50%; transform: translateX(-50%);
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 1; }
+    .hero-breadcrumb {
+      font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .hero-breadcrumb a { color: var(--text-muted); }
+    .hero-breadcrumb a:hover { color: var(--text-primary); }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.375rem 1rem 0.375rem 0.75rem;
+      background: var(--accent-secondary-dim);
+      border: 1px solid rgba(168, 85, 247, 0.15);
+      border-radius: 100px; font-size: 0.8125rem; font-weight: 500;
+      color: var(--accent-secondary); margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800;
+      letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 1.25rem;
+    }
+    .hero h1 .accent-text {
+      background: var(--gradient-accent);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-description {
+      font-size: 1.125rem; color: var(--text-secondary);
+      max-width: 600px; line-height: 1.7; margin-bottom: 2.5rem;
+    }
+    .hero-stats { display: flex; gap: 3rem; flex-wrap: wrap; }
+    .hero-stat { display: flex; flex-direction: column; gap: 0.25rem; }
+    .hero-stat-value { font-family: var(--font-mono); font-size: 1.5rem; font-weight: 700; }
+    .hero-stat-value .accent-text {
+      background: var(--gradient-accent);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-stat-label { font-size: 0.8125rem; color: var(--text-muted); }
+
+    /* Pipeline */
+    .pipeline { margin-top: 3rem; }
+    .pipeline-step {
+      display: flex; gap: 1.5rem; position: relative;
+      padding-bottom: 2.5rem;
+    }
+    .pipeline-step:last-child { padding-bottom: 0; }
+    .pipeline-step::before {
+      content: ''; position: absolute; left: 23px; top: 48px;
+      width: 2px; height: calc(100% - 48px);
+      background: linear-gradient(to bottom, rgba(168, 85, 247, 0.3), rgba(168, 85, 247, 0.05));
+    }
+    .pipeline-step:last-child::before { display: none; }
+    .pipeline-number {
+      width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0;
+      background: var(--accent-secondary-dim); border: 1px solid rgba(168, 85, 247, 0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono); font-weight: 700; font-size: 1rem;
+      color: var(--accent-secondary); position: relative; z-index: 1;
+    }
+    .pipeline-content {
+      padding: 1.25rem 1.5rem; background: var(--bg-card);
+      border: 1px solid var(--border); border-radius: 12px;
+      flex: 1; transition: border-color 0.2s ease;
+    }
+    .pipeline-content:hover { border-color: var(--accent-secondary); }
+    .pipeline-step-title { font-weight: 700; font-size: 1.0625rem; margin-bottom: 0.375rem; }
+    .pipeline-step-desc { font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65; }
+    .pipeline-step-tech {
+      margin-top: 0.75rem; display: flex; flex-wrap: wrap; gap: 0.375rem;
+    }
+    .pipeline-tech-tag {
+      font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500;
+      padding: 0.25rem 0.625rem; background: var(--bg-secondary);
+      border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted);
+    }
+
+    /* Features */
+    .features-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.25rem; margin-top: 3rem;
+    }
+    .feature-card {
+      padding: 1.5rem; background: var(--bg-card);
+      border: 1px solid var(--border); border-radius: 14px;
+      transition: border-color 0.2s ease;
+    }
+    .feature-card:hover { border-color: var(--accent-secondary); }
+    .feature-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .feature-icon svg { width: 20px; height: 20px; }
+    .feature-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.375rem; }
+    .feature-desc { font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.6; }
+
+    /* Tech Stack */
+    .tech-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem; margin-top: 3rem;
+    }
+    .tech-item {
+      padding: 1.25rem; background: var(--bg-card);
+      border: 1px solid var(--border); border-radius: 12px;
+      text-align: center; transition: border-color 0.2s ease;
+    }
+    .tech-item:hover { border-color: var(--accent-secondary); }
+    .tech-item-name { font-weight: 700; font-size: 1rem; margin-bottom: 0.25rem; }
+    .tech-item-role { font-size: 0.8125rem; color: var(--text-muted); }
+
+    /* CTA */
+    .cta-section { text-align: center; padding: 6rem 2rem; }
+    .cta-section .section-label { justify-content: center; }
+    .cta-section .section-subtitle { margin: 0 auto 2rem; text-align: center; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1.5rem; border-radius: 8px;
+      font-size: 0.9375rem; font-weight: 600; font-family: var(--font-sans);
+      cursor: pointer; transition: all 0.2s ease; border: none;
+    }
+    .btn:focus-visible { outline: 2px solid var(--accent-secondary); outline-offset: 2px; }
+    .btn-primary { background: var(--accent-secondary); color: #fff; }
+    .btn-primary:hover { background: #9333EA; color: #fff; transform: translateY(-1px); box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3); }
+    .btn-ghost { background: transparent; color: var(--text-primary); border: 1px solid var(--border); }
+    .btn-ghost:hover { border-color: var(--accent-secondary); background: var(--accent-secondary-dim); }
+
+    /* Footer */
+    .footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-size: 0.8125rem; color: var(--text-muted); }
+
+    /* Reveal */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      section { padding: 4rem 1.25rem; }
+      .nav { padding: 0 1.25rem; }
+      .hero h1 { font-size: 2rem; }
+      .hero-stats { flex-direction: column; gap: 1rem; }
+      .features-grid { grid-template-columns: 1fr; }
+      .tech-grid { grid-template-columns: repeat(2, 1fr); }
+      .section-title { font-size: 1.75rem; }
+      .pipeline-step { gap: 1rem; }
+    }
+    @media (max-width: 480px) {
+      .tech-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo">mani<span>.</span>dev</a>
+      <a href="../index.html#projects" class="nav-back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Back to Portfolio
+      </a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-grid"></div>
+      <div class="hero-glow"></div>
+    </div>
+    <div class="container hero-content">
+      <div class="hero-breadcrumb">
+        <a href="../index.html">Portfolio</a>
+        <span>/</span>
+        <a href="../index.html#projects">Projects</a>
+        <span>/</span>
+        <span style="color: var(--text-secondary);">Automated Site Provisioning</span>
+      </div>
+      <div class="hero-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        Fully Automated
+      </div>
+      <h1>
+        Automated<br>
+        <span class="accent-text">Site Provisioning</span>
+      </h1>
+      <p class="hero-description">
+        Zero-touch applicant onboarding system. Forward a candidate's email, and the pipeline
+        auto-provisions a fully configured website with pre-installed templates, plugins, and licenses,
+        then sends the applicant their credentials and test assignment.
+      </p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-value"><span class="accent-text">0</span></span>
+          <span class="hero-stat-label">Manual Steps</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-value"><span class="accent-text">&lt;3 min</span></span>
+          <span class="hero-stat-label">Email to Live Site</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-value"><span class="accent-text">100%</span></span>
+          <span class="hero-stat-label">Automated</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section id="pipeline">
+    <div class="container">
+      <div class="reveal">
+        <div class="section-label">Pipeline</div>
+        <div class="section-title">How It Works</div>
+        <p class="section-subtitle">One email triggers the entire onboarding flow. No dashboards, no manual steps.</p>
+      </div>
+      <div class="pipeline">
+
+        <div class="pipeline-step reveal reveal-delay-1">
+          <div class="pipeline-number">1</div>
+          <div class="pipeline-content">
+            <div class="pipeline-step-title">Email Forwarded</div>
+            <div class="pipeline-step-desc">
+              A team member forwards an applicant's email to a dedicated inbox.
+              The system monitors via IMAP and picks it up automatically.
+            </div>
+            <div class="pipeline-step-tech">
+              <span class="pipeline-tech-tag">IMAP Trigger</span>
+              <span class="pipeline-tech-tag">n8n</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pipeline-step reveal reveal-delay-1">
+          <div class="pipeline-number">2</div>
+          <div class="pipeline-content">
+            <div class="pipeline-step-title">Applicant Data Extraction</div>
+            <div class="pipeline-step-desc">
+              Custom JavaScript parses the forwarded email chain to extract the original
+              sender's name and email. Handles multi-level forwards, Yahoo/GMX formatting,
+              umlaut names, and HTML-encoded addresses.
+            </div>
+            <div class="pipeline-step-tech">
+              <span class="pipeline-tech-tag">JavaScript</span>
+              <span class="pipeline-tech-tag">Regex Parsing</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pipeline-step reveal reveal-delay-1">
+          <div class="pipeline-number">3</div>
+          <div class="pipeline-content">
+            <div class="pipeline-step-title">Subdomain &amp; Credentials Generated</div>
+            <div class="pipeline-step-desc">
+              Applicant name is sanitized into a unique subdomain (umlaut handling, reserved name
+              detection, collision avoidance). A strong 14-character password is generated.
+            </div>
+            <div class="pipeline-step-tech">
+              <span class="pipeline-tech-tag">Sanitization</span>
+              <span class="pipeline-tech-tag">Crypto</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pipeline-step reveal reveal-delay-1">
+          <div class="pipeline-number">4</div>
+          <div class="pipeline-content">
+            <div class="pipeline-step-title">Website Created</div>
+            <div class="pipeline-step-desc">
+              A PHP API on the server provisions a full CMS installation:
+              subdomain DNS, database, CMS core, admin user, plus pre-installed page builder
+              and form plugins with activated licenses.
+            </div>
+            <div class="pipeline-step-tech">
+              <span class="pipeline-tech-tag">PHP API</span>
+              <span class="pipeline-tech-tag">CMS</span>
+              <span class="pipeline-tech-tag">Page Builder</span>
+              <span class="pipeline-tech-tag">Form Plugin</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pipeline-step reveal reveal-delay-1">
+          <div class="pipeline-number">5</div>
+          <div class="pipeline-content">
+            <div class="pipeline-step-title">Logged to SharePoint</div>
+            <div class="pipeline-step-desc">
+              On success, the applicant's details, subdomain, URL, username, password,
+              and database name are logged to a SharePoint list for team visibility.
+              Failures go to a separate error list.
+            </div>
+            <div class="pipeline-step-tech">
+              <span class="pipeline-tech-tag">SharePoint API</span>
+              <span class="pipeline-tech-tag">Error Handling</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pipeline-step reveal reveal-delay-1">
+          <div class="pipeline-number">6</div>
+          <div class="pipeline-content">
+            <div class="pipeline-step-title">Onboarding Email Sent</div>
+            <div class="pipeline-step-desc">
+              The applicant receives a professional email with their WP admin URL,
+              login credentials, the design brief, SharePoint link to brand assets,
+              and the deadline for their test assignment. All fully templated.
+            </div>
+            <div class="pipeline-step-tech">
+              <span class="pipeline-tech-tag">SMTP</span>
+              <span class="pipeline-tech-tag">HTML Email</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Features -->
+  <section id="features">
+    <div class="container">
+      <div class="reveal">
+        <div class="section-label">Features</div>
+        <div class="section-title">What Makes It Smart</div>
+      </div>
+      <div class="features-grid">
+
+        <div class="feature-card reveal reveal-delay-1">
+          <div class="feature-icon" style="background: var(--accent-secondary-dim);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div class="feature-title">Email-Triggered</div>
+          <div class="feature-desc">No dashboard needed. Just forward the applicant's email and the entire pipeline runs automatically.</div>
+        </div>
+
+        <div class="feature-card reveal reveal-delay-2">
+          <div class="feature-icon" style="background: var(--accent-dim);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <div class="feature-title">Smart Email Parsing</div>
+          <div class="feature-desc">Extracts the original applicant from nested forwards. Handles umlauts, HTML encoding, and international names.</div>
+        </div>
+
+        <div class="feature-card reveal reveal-delay-3">
+          <div class="feature-icon" style="background: rgba(59, 130, 246, 0.1);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+          </div>
+          <div class="feature-title">Full CMS Stack</div>
+          <div class="feature-desc">Each site comes with a page builder, form plugins, activated licenses, and the company template pre-loaded.</div>
+        </div>
+
+        <div class="feature-card reveal reveal-delay-1">
+          <div class="feature-icon" style="background: rgba(251, 191, 36, 0.1);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="feature-title">Collision-Safe Subdomains</div>
+          <div class="feature-desc">Name sanitization with umlaut conversion, reserved name detection, and batch duplicate avoidance.</div>
+        </div>
+
+        <div class="feature-card reveal reveal-delay-2">
+          <div class="feature-icon" style="background: rgba(239, 68, 68, 0.1);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <div class="feature-title">Error Tracking</div>
+          <div class="feature-desc">Failures are logged to a separate SharePoint list with full context for quick debugging.</div>
+        </div>
+
+        <div class="feature-card reveal reveal-delay-3">
+          <div class="feature-icon" style="background: rgba(20, 184, 166, 0.1);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#14B8A6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div class="feature-title">Full Audit Log</div>
+          <div class="feature-desc">Every onboarding is logged to SharePoint and Google Sheets with timestamp, credentials, and status.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Stack -->
+  <section id="tech">
+    <div class="container">
+      <div class="reveal">
+        <div class="section-label">Stack</div>
+        <div class="section-title">Technologies Used</div>
+      </div>
+      <div class="tech-grid">
+        <div class="tech-item reveal reveal-delay-1">
+          <div class="tech-item-name">n8n</div>
+          <div class="tech-item-role">Workflow Automation</div>
+        </div>
+        <div class="tech-item reveal reveal-delay-1">
+          <div class="tech-item-name">CMS</div>
+          <div class="tech-item-role">Website Platform</div>
+        </div>
+        <div class="tech-item reveal reveal-delay-2">
+          <div class="tech-item-name">PHP</div>
+          <div class="tech-item-role">Site Provisioning API</div>
+        </div>
+        <div class="tech-item reveal reveal-delay-2">
+          <div class="tech-item-name">JavaScript</div>
+          <div class="tech-item-role">Email Parsing Logic</div>
+        </div>
+        <div class="tech-item reveal reveal-delay-3">
+          <div class="tech-item-name">SharePoint</div>
+          <div class="tech-item-role">Logging &amp; Audit</div>
+        </div>
+        <div class="tech-item reveal reveal-delay-3">
+          <div class="tech-item-name">SMTP / IMAP</div>
+          <div class="tech-item-role">Email Send &amp; Receive</div>
+        </div>
+        <div class="tech-item reveal reveal-delay-1">
+          <div class="tech-item-name">Page Builder</div>
+          <div class="tech-item-role">Visual Site Editor</div>
+        </div>
+        <div class="tech-item reveal reveal-delay-2">
+          <div class="tech-item-name">Form Plugin</div>
+          <div class="tech-item-role">Contact Forms</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="reveal">
+        <div class="section-label">Portfolio</div>
+        <div class="section-title">Explore More Work</div>
+        <p class="section-subtitle">Head back to see the full picture.</p>
+      </div>
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;" class="reveal reveal-delay-1">
+        <a href="../index.html#projects" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          Back to Portfolio
+        </a>
+        <a href="../index.html#contact" class="btn btn-ghost">Get in Touch</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">&copy; 2026 Mani Golchin</div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReducedMotion) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    } else {
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+    }
+  </script>
+
+</body>
+</html>
