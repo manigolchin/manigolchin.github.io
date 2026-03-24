@@ -271,23 +271,12 @@
       position: relative;
       z-index: 1;
     }
-    .hero-back {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: var(--text-secondary);
-      margin-bottom: 2rem;
-      transition: color 0.2s ease;
+    .hero-breadcrumb {
+      font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.5rem;
     }
-    .hero-back:hover { color: var(--accent); }
-    .hero-back svg {
-      width: 16px;
-      height: 16px;
-      transition: transform 0.2s ease;
-    }
-    .hero-back:hover svg { transform: translateX(-3px); }
+    .hero-breadcrumb a { color: var(--text-muted); }
+    .hero-breadcrumb a:hover { color: var(--text-primary); }
     .hero-badge {
       display: inline-flex;
       align-items: center;
@@ -782,13 +771,16 @@
       <div class="hero-glow"></div>
     </div>
     <div class="container hero-content">
-      <a href="../index.html#projects" class="hero-back">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-        <span data-i18n="hero.back">Back to Portfolio</span>
-      </a>
+      <div class="hero-breadcrumb">
+        <a href="../index.html" data-i18n="hero.bc1">Portfolio</a>
+        <span>/</span>
+        <a href="../index.html#projects" data-i18n="hero.bc2">Projects</a>
+        <span>/</span>
+        <span style="color: var(--text-secondary);" data-i18n="hero.bc3">Procurement Platform</span>
+      </div>
       <div class="hero-badge">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-        <span data-i18n="hero.badge">Production System &middot; KALKU</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        <span data-i18n="hero.badge">Production System</span>
       </div>
       <h1>
         KALKU<br>
@@ -1342,8 +1334,10 @@
         'nav.features': 'Features',
         'nav.tech': 'Tech Stack',
         'nav.screenshots': 'Screenshots',
-        'hero.back': 'Back to Portfolio',
-        'hero.badge': 'Production System \u00b7 KALKU',
+        'hero.bc1': 'Portfolio',
+        'hero.bc2': 'Projects',
+        'hero.bc3': 'Procurement Platform',
+        'hero.badge': 'Production System',
         'hero.h1accent': 'Procurement',
         'hero.h1suffix': 'Platform',
         'hero.desc': 'Full-stack procurement automation for the German construction industry. AI-powered document classification, supplier matching, and tender dispatch \u2014 end to end, for multiple companies and trades.',
@@ -1434,8 +1428,10 @@
         'nav.features': 'Funktionen',
         'nav.tech': 'Technologien',
         'nav.screenshots': 'Screenshots',
-        'hero.back': 'Zur\u00fcck zum Portfolio',
-        'hero.badge': 'Produktivsystem \u00b7 KALKU',
+        'hero.bc1': 'Portfolio',
+        'hero.bc2': 'Projekte',
+        'hero.bc3': 'Beschaffungsplattform',
+        'hero.badge': 'Produktivsystem',
         'hero.h1accent': 'Beschaffungs\u00adplattform',
         'hero.h1suffix': '',
         'hero.desc': 'Full-Stack-Beschaffungsautomatisierung f\u00fcr die deutsche Bauindustrie. KI-gest\u00fctzte Dokumentenklassifizierung, Lieferantenzuordnung und Ausschreibungsversand \u2014 durchg\u00e4ngig, f\u00fcr mehrere Unternehmen und Gewerke.',
