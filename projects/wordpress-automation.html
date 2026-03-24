@@ -259,6 +259,26 @@
     @media (max-width: 480px) {
       .tech-grid { grid-template-columns: 1fr; }
     }
+
+    /* Language Toggle */
+    .lang-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.5rem 0.875rem;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 0.9375rem;
+      transition: border-color 0.2s ease;
+    }
+    .lang-toggle:hover { border-color: var(--accent); }
+    .lang-option { color: var(--text-muted); transition: color 0.2s ease; }
+    .lang-option.active { color: var(--accent); font-weight: 700; }
+    .lang-divider { color: var(--text-muted); font-size: 0.75rem; }
+    .nav-right { display: flex; align-items: center; gap: 0.75rem; }
   </style>
 </head>
 <body>
@@ -266,10 +286,17 @@
   <nav class="nav" id="nav">
     <div class="nav-inner">
       <a href="../index.html" class="nav-logo">mani<span>.</span>work</a>
-      <a href="../index.html#projects" class="nav-back">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-        Back to Portfolio
-      </a>
+      <div class="nav-right">
+        <a href="../index.html#projects" class="nav-back">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          <span data-i18n="nav.back">Back to Portfolio</span>
+        </a>
+        <button class="lang-toggle" id="langToggle" aria-label="Switch language">
+          <span class="lang-option active" data-lang="en">EN</span>
+          <span class="lang-divider">/</span>
+          <span class="lang-option" data-lang="de">DE</span>
+        </button>
+      </div>
     </div>
   </nav>
 
@@ -281,21 +308,21 @@
     </div>
     <div class="container hero-content">
       <div class="hero-breadcrumb">
-        <a href="../index.html">Portfolio</a>
+        <a href="../index.html" data-i18n="breadcrumb.portfolio">Portfolio</a>
         <span>/</span>
-        <a href="../index.html#projects">Projects</a>
+        <a href="../index.html#projects" data-i18n="breadcrumb.projects">Projects</a>
         <span>/</span>
-        <span style="color: var(--text-secondary);">Automated Site Provisioning</span>
+        <span style="color: var(--text-secondary);" data-i18n="breadcrumb.current">Automated Site Provisioning</span>
       </div>
       <div class="hero-badge">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-        Fully Automated
+        <span data-i18n="hero.badge">Fully Automated</span>
       </div>
       <h1>
-        Automated<br>
-        <span class="accent-text">Site Provisioning</span>
+        <span data-i18n="hero.title1">Automated</span><br>
+        <span class="accent-text" data-i18n="hero.title2">Site Provisioning</span>
       </h1>
-      <p class="hero-description">
+      <p class="hero-description" data-i18n="hero.desc">
         Zero-touch applicant onboarding system. Forward a candidate's email, and the pipeline
         auto-provisions a fully configured website with pre-installed templates, plugins, and licenses,
         then sends the applicant their credentials and test assignment.
@@ -303,15 +330,15 @@
       <div class="hero-stats">
         <div class="hero-stat">
           <span class="hero-stat-value"><span class="accent-text">0</span></span>
-          <span class="hero-stat-label">Manual Steps</span>
+          <span class="hero-stat-label" data-i18n="hero.stat1.label">Manual Steps</span>
         </div>
         <div class="hero-stat">
           <span class="hero-stat-value"><span class="accent-text">&lt;3 min</span></span>
-          <span class="hero-stat-label">Email to Live Site</span>
+          <span class="hero-stat-label" data-i18n="hero.stat2.label">Email to Live Site</span>
         </div>
         <div class="hero-stat">
           <span class="hero-stat-value"><span class="accent-text">100%</span></span>
-          <span class="hero-stat-label">Automated</span>
+          <span class="hero-stat-label" data-i18n="hero.stat3.label">Automated</span>
         </div>
       </div>
     </div>
@@ -321,17 +348,17 @@
   <section id="pipeline">
     <div class="container">
       <div class="reveal">
-        <div class="section-label">Pipeline</div>
-        <div class="section-title">How It Works</div>
-        <p class="section-subtitle">One email triggers the entire onboarding flow. No dashboards, no manual steps.</p>
+        <div class="section-label" data-i18n="pipeline.label">Pipeline</div>
+        <div class="section-title" data-i18n="pipeline.title">How It Works</div>
+        <p class="section-subtitle" data-i18n="pipeline.subtitle">One email triggers the entire onboarding flow. No dashboards, no manual steps.</p>
       </div>
       <div class="pipeline">
 
         <div class="pipeline-step reveal reveal-delay-1">
           <div class="pipeline-number">1</div>
           <div class="pipeline-content">
-            <div class="pipeline-step-title">Email Forwarded</div>
-            <div class="pipeline-step-desc">
+            <div class="pipeline-step-title" data-i18n="step1.title">Email Forwarded</div>
+            <div class="pipeline-step-desc" data-i18n="step1.desc">
               A team member forwards an applicant's email to a dedicated inbox.
               The system monitors via IMAP and picks it up automatically.
             </div>
@@ -345,8 +372,8 @@
         <div class="pipeline-step reveal reveal-delay-1">
           <div class="pipeline-number">2</div>
           <div class="pipeline-content">
-            <div class="pipeline-step-title">Applicant Data Extraction</div>
-            <div class="pipeline-step-desc">
+            <div class="pipeline-step-title" data-i18n="step2.title">Applicant Data Extraction</div>
+            <div class="pipeline-step-desc" data-i18n="step2.desc">
               Custom JavaScript parses the forwarded email chain to extract the original
               sender's name and email. Handles multi-level forwards, Yahoo/GMX formatting,
               umlaut names, and HTML-encoded addresses.
@@ -361,8 +388,8 @@
         <div class="pipeline-step reveal reveal-delay-1">
           <div class="pipeline-number">3</div>
           <div class="pipeline-content">
-            <div class="pipeline-step-title">Subdomain &amp; Credentials Generated</div>
-            <div class="pipeline-step-desc">
+            <div class="pipeline-step-title" data-i18n="step3.title">Subdomain &amp; Credentials Generated</div>
+            <div class="pipeline-step-desc" data-i18n="step3.desc">
               Applicant name is sanitized into a unique subdomain (umlaut handling, reserved name
               detection, collision avoidance). A strong 14-character password is generated.
             </div>
@@ -376,8 +403,8 @@
         <div class="pipeline-step reveal reveal-delay-1">
           <div class="pipeline-number">4</div>
           <div class="pipeline-content">
-            <div class="pipeline-step-title">Website Created</div>
-            <div class="pipeline-step-desc">
+            <div class="pipeline-step-title" data-i18n="step4.title">Website Created</div>
+            <div class="pipeline-step-desc" data-i18n="step4.desc">
               A PHP API on the server provisions a full CMS installation:
               subdomain DNS, database, CMS core, admin user, plus pre-installed page builder
               and form plugins with activated licenses.
@@ -394,8 +421,8 @@
         <div class="pipeline-step reveal reveal-delay-1">
           <div class="pipeline-number">5</div>
           <div class="pipeline-content">
-            <div class="pipeline-step-title">Logged to SharePoint</div>
-            <div class="pipeline-step-desc">
+            <div class="pipeline-step-title" data-i18n="step5.title">Logged to SharePoint</div>
+            <div class="pipeline-step-desc" data-i18n="step5.desc">
               On success, the applicant's details, subdomain, URL, username, password,
               and database name are logged to a SharePoint list for team visibility.
               Failures go to a separate error list.
@@ -410,8 +437,8 @@
         <div class="pipeline-step reveal reveal-delay-1">
           <div class="pipeline-number">6</div>
           <div class="pipeline-content">
-            <div class="pipeline-step-title">Onboarding Email Sent</div>
-            <div class="pipeline-step-desc">
+            <div class="pipeline-step-title" data-i18n="step6.title">Onboarding Email Sent</div>
+            <div class="pipeline-step-desc" data-i18n="step6.desc">
               The applicant receives a professional email with their WP admin URL,
               login credentials, the design brief, SharePoint link to brand assets,
               and the deadline for their test assignment. All fully templated.
@@ -431,8 +458,8 @@
   <section id="features">
     <div class="container">
       <div class="reveal">
-        <div class="section-label">Features</div>
-        <div class="section-title">What Makes It Smart</div>
+        <div class="section-label" data-i18n="features.label">Features</div>
+        <div class="section-title" data-i18n="features.title">What Makes It Smart</div>
       </div>
       <div class="features-grid">
 
@@ -440,48 +467,48 @@
           <div class="feature-icon" style="background: var(--accent-secondary-dim);">
             <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           </div>
-          <div class="feature-title">Email-Triggered</div>
-          <div class="feature-desc">No dashboard needed. Just forward the applicant's email and the entire pipeline runs automatically.</div>
+          <div class="feature-title" data-i18n="feat1.title">Email-Triggered</div>
+          <div class="feature-desc" data-i18n="feat1.desc">No dashboard needed. Just forward the applicant's email and the entire pipeline runs automatically.</div>
         </div>
 
         <div class="feature-card reveal reveal-delay-2">
           <div class="feature-icon" style="background: var(--accent-dim);">
             <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
           </div>
-          <div class="feature-title">Smart Email Parsing</div>
-          <div class="feature-desc">Extracts the original applicant from nested forwards. Handles umlauts, HTML encoding, and international names.</div>
+          <div class="feature-title" data-i18n="feat2.title">Smart Email Parsing</div>
+          <div class="feature-desc" data-i18n="feat2.desc">Extracts the original applicant from nested forwards. Handles umlauts, HTML encoding, and international names.</div>
         </div>
 
         <div class="feature-card reveal reveal-delay-3">
           <div class="feature-icon" style="background: rgba(59, 130, 246, 0.1);">
             <svg viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
           </div>
-          <div class="feature-title">Full CMS Stack</div>
-          <div class="feature-desc">Each site comes with a page builder, form plugins, activated licenses, and the company template pre-loaded.</div>
+          <div class="feature-title" data-i18n="feat3.title">Full CMS Stack</div>
+          <div class="feature-desc" data-i18n="feat3.desc">Each site comes with a page builder, form plugins, activated licenses, and the company template pre-loaded.</div>
         </div>
 
         <div class="feature-card reveal reveal-delay-1">
           <div class="feature-icon" style="background: rgba(251, 191, 36, 0.1);">
             <svg viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </div>
-          <div class="feature-title">Collision-Safe Subdomains</div>
-          <div class="feature-desc">Name sanitization with umlaut conversion, reserved name detection, and batch duplicate avoidance.</div>
+          <div class="feature-title" data-i18n="feat4.title">Collision-Safe Subdomains</div>
+          <div class="feature-desc" data-i18n="feat4.desc">Name sanitization with umlaut conversion, reserved name detection, and batch duplicate avoidance.</div>
         </div>
 
         <div class="feature-card reveal reveal-delay-2">
           <div class="feature-icon" style="background: rgba(239, 68, 68, 0.1);">
             <svg viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
           </div>
-          <div class="feature-title">Error Tracking</div>
-          <div class="feature-desc">Failures are logged to a separate SharePoint list with full context for quick debugging.</div>
+          <div class="feature-title" data-i18n="feat5.title">Error Tracking</div>
+          <div class="feature-desc" data-i18n="feat5.desc">Failures are logged to a separate SharePoint list with full context for quick debugging.</div>
         </div>
 
         <div class="feature-card reveal reveal-delay-3">
           <div class="feature-icon" style="background: rgba(20, 184, 166, 0.1);">
             <svg viewBox="0 0 24 24" fill="none" stroke="#14B8A6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
           </div>
-          <div class="feature-title">Full Audit Log</div>
-          <div class="feature-desc">Every onboarding is logged to SharePoint and Google Sheets with timestamp, credentials, and status.</div>
+          <div class="feature-title" data-i18n="feat6.title">Full Audit Log</div>
+          <div class="feature-desc" data-i18n="feat6.desc">Every onboarding is logged to SharePoint and Google Sheets with timestamp, credentials, and status.</div>
         </div>
 
       </div>
@@ -492,41 +519,41 @@
   <section id="tech">
     <div class="container">
       <div class="reveal">
-        <div class="section-label">Stack</div>
-        <div class="section-title">Technologies Used</div>
+        <div class="section-label" data-i18n="tech.label">Stack</div>
+        <div class="section-title" data-i18n="tech.title">Technologies Used</div>
       </div>
       <div class="tech-grid">
         <div class="tech-item reveal reveal-delay-1">
-          <div class="tech-item-name">n8n</div>
-          <div class="tech-item-role">Workflow Automation</div>
+          <div class="tech-item-name" data-i18n="tech1.name">n8n</div>
+          <div class="tech-item-role" data-i18n="tech1.role">Workflow Automation</div>
         </div>
         <div class="tech-item reveal reveal-delay-1">
-          <div class="tech-item-name">CMS</div>
-          <div class="tech-item-role">Website Platform</div>
+          <div class="tech-item-name" data-i18n="tech2.name">CMS</div>
+          <div class="tech-item-role" data-i18n="tech2.role">Website Platform</div>
         </div>
         <div class="tech-item reveal reveal-delay-2">
-          <div class="tech-item-name">PHP</div>
-          <div class="tech-item-role">Site Provisioning API</div>
+          <div class="tech-item-name" data-i18n="tech3.name">PHP</div>
+          <div class="tech-item-role" data-i18n="tech3.role">Site Provisioning API</div>
         </div>
         <div class="tech-item reveal reveal-delay-2">
-          <div class="tech-item-name">JavaScript</div>
-          <div class="tech-item-role">Email Parsing Logic</div>
+          <div class="tech-item-name" data-i18n="tech4.name">JavaScript</div>
+          <div class="tech-item-role" data-i18n="tech4.role">Email Parsing Logic</div>
         </div>
         <div class="tech-item reveal reveal-delay-3">
-          <div class="tech-item-name">SharePoint</div>
-          <div class="tech-item-role">Logging &amp; Audit</div>
+          <div class="tech-item-name" data-i18n="tech5.name">SharePoint</div>
+          <div class="tech-item-role" data-i18n="tech5.role">Logging &amp; Audit</div>
         </div>
         <div class="tech-item reveal reveal-delay-3">
-          <div class="tech-item-name">SMTP / IMAP</div>
-          <div class="tech-item-role">Email Send &amp; Receive</div>
+          <div class="tech-item-name" data-i18n="tech6.name">SMTP / IMAP</div>
+          <div class="tech-item-role" data-i18n="tech6.role">Email Send &amp; Receive</div>
         </div>
         <div class="tech-item reveal reveal-delay-1">
-          <div class="tech-item-name">Page Builder</div>
-          <div class="tech-item-role">Visual Site Editor</div>
+          <div class="tech-item-name" data-i18n="tech7.name">Page Builder</div>
+          <div class="tech-item-role" data-i18n="tech7.role">Visual Site Editor</div>
         </div>
         <div class="tech-item reveal reveal-delay-2">
-          <div class="tech-item-name">Form Plugin</div>
-          <div class="tech-item-role">Contact Forms</div>
+          <div class="tech-item-name" data-i18n="tech8.name">Form Plugin</div>
+          <div class="tech-item-role" data-i18n="tech8.role">Contact Forms</div>
         </div>
       </div>
     </div>
@@ -536,16 +563,16 @@
   <section class="cta-section">
     <div class="container">
       <div class="reveal">
-        <div class="section-label">Portfolio</div>
-        <div class="section-title">Explore More Work</div>
-        <p class="section-subtitle">Head back to see the full picture.</p>
+        <div class="section-label" data-i18n="cta.label">Portfolio</div>
+        <div class="section-title" data-i18n="cta.title">Explore More Work</div>
+        <p class="section-subtitle" data-i18n="cta.subtitle">Head back to see the full picture.</p>
       </div>
       <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;" class="reveal reveal-delay-1">
         <a href="../index.html#projects" class="btn btn-primary">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-          Back to Portfolio
+          <span data-i18n="cta.back">Back to Portfolio</span>
         </a>
-        <a href="../index.html#contact" class="btn btn-ghost">Get in Touch</a>
+        <a href="../index.html#contact" class="btn btn-ghost" data-i18n="cta.contact">Get in Touch</a>
       </div>
     </div>
   </section>
@@ -574,6 +601,147 @@
     } else {
       document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
     }
+
+    // i18n Language Toggle
+    const translations = {
+      en: {
+        'nav.back': 'Back to Portfolio',
+        'breadcrumb.portfolio': 'Portfolio',
+        'breadcrumb.projects': 'Projects',
+        'breadcrumb.current': 'Automated Site Provisioning',
+        'hero.badge': 'Fully Automated',
+        'hero.title1': 'Automated',
+        'hero.title2': 'Site Provisioning',
+        'hero.desc': "Zero-touch applicant onboarding system. Forward a candidate's email, and the pipeline auto-provisions a fully configured website with pre-installed templates, plugins, and licenses, then sends the applicant their credentials and test assignment.",
+        'hero.stat1.label': 'Manual Steps',
+        'hero.stat2.label': 'Email to Live Site',
+        'hero.stat3.label': 'Automated',
+        'pipeline.label': 'Pipeline',
+        'pipeline.title': 'How It Works',
+        'pipeline.subtitle': 'One email triggers the entire onboarding flow. No dashboards, no manual steps.',
+        'step1.title': 'Email Forwarded',
+        'step1.desc': "A team member forwards an applicant's email to a dedicated inbox. The system monitors via IMAP and picks it up automatically.",
+        'step2.title': 'Applicant Data Extraction',
+        'step2.desc': "Custom JavaScript parses the forwarded email chain to extract the original sender's name and email. Handles multi-level forwards, Yahoo/GMX formatting, umlaut names, and HTML-encoded addresses.",
+        'step3.title': 'Subdomain & Credentials Generated',
+        'step3.desc': 'Applicant name is sanitized into a unique subdomain (umlaut handling, reserved name detection, collision avoidance). A strong 14-character password is generated.',
+        'step4.title': 'Website Created',
+        'step4.desc': 'A PHP API on the server provisions a full CMS installation: subdomain DNS, database, CMS core, admin user, plus pre-installed page builder and form plugins with activated licenses.',
+        'step5.title': 'Logged to SharePoint',
+        'step5.desc': "On success, the applicant's details, subdomain, URL, username, password, and database name are logged to a SharePoint list for team visibility. Failures go to a separate error list.",
+        'step6.title': 'Onboarding Email Sent',
+        'step6.desc': 'The applicant receives a professional email with their WP admin URL, login credentials, the design brief, SharePoint link to brand assets, and the deadline for their test assignment. All fully templated.',
+        'features.label': 'Features',
+        'features.title': 'What Makes It Smart',
+        'feat1.title': 'Email-Triggered',
+        'feat1.desc': "No dashboard needed. Just forward the applicant's email and the entire pipeline runs automatically.",
+        'feat2.title': 'Smart Email Parsing',
+        'feat2.desc': 'Extracts the original applicant from nested forwards. Handles umlauts, HTML encoding, and international names.',
+        'feat3.title': 'Full CMS Stack',
+        'feat3.desc': 'Each site comes with a page builder, form plugins, activated licenses, and the company template pre-loaded.',
+        'feat4.title': 'Collision-Safe Subdomains',
+        'feat4.desc': 'Name sanitization with umlaut conversion, reserved name detection, and batch duplicate avoidance.',
+        'feat5.title': 'Error Tracking',
+        'feat5.desc': 'Failures are logged to a separate SharePoint list with full context for quick debugging.',
+        'feat6.title': 'Full Audit Log',
+        'feat6.desc': 'Every onboarding is logged to SharePoint and Google Sheets with timestamp, credentials, and status.',
+        'tech.label': 'Stack',
+        'tech.title': 'Technologies Used',
+        'tech1.name': 'n8n', 'tech1.role': 'Workflow Automation',
+        'tech2.name': 'CMS', 'tech2.role': 'Website Platform',
+        'tech3.name': 'PHP', 'tech3.role': 'Site Provisioning API',
+        'tech4.name': 'JavaScript', 'tech4.role': 'Email Parsing Logic',
+        'tech5.name': 'SharePoint', 'tech5.role': 'Logging & Audit',
+        'tech6.name': 'SMTP / IMAP', 'tech6.role': 'Email Send & Receive',
+        'tech7.name': 'Page Builder', 'tech7.role': 'Visual Site Editor',
+        'tech8.name': 'Form Plugin', 'tech8.role': 'Contact Forms',
+        'cta.label': 'Portfolio',
+        'cta.title': 'Explore More Work',
+        'cta.subtitle': 'Head back to see the full picture.',
+        'cta.back': 'Back to Portfolio',
+        'cta.contact': 'Get in Touch'
+      },
+      de: {
+        'nav.back': 'Zurück zum Portfolio',
+        'breadcrumb.portfolio': 'Portfolio',
+        'breadcrumb.projects': 'Projekte',
+        'breadcrumb.current': 'Automatische Website-Bereitstellung',
+        'hero.badge': 'Vollautomatisiert',
+        'hero.title1': 'Automatische',
+        'hero.title2': 'Website-Bereitstellung',
+        'hero.desc': 'Vollautomatisches Bewerber-Onboarding. Leiten Sie die E-Mail eines Kandidaten weiter, und die Pipeline erstellt automatisch eine fertig konfigurierte Website mit vorinstallierten Templates, Plugins und Lizenzen und sendet dem Bewerber seine Zugangsdaten und Testaufgabe.',
+        'hero.stat1.label': 'Manuelle Schritte',
+        'hero.stat2.label': 'E-Mail bis zur fertigen Website',
+        'hero.stat3.label': 'Automatisiert',
+        'pipeline.label': 'Pipeline',
+        'pipeline.title': 'So funktioniert es',
+        'pipeline.subtitle': 'Eine E-Mail startet den gesamten Onboarding-Prozess. Keine Dashboards, keine manuellen Schritte.',
+        'step1.title': 'E-Mail weitergeleitet',
+        'step1.desc': 'Ein Teammitglied leitet die E-Mail eines Bewerbers an ein dediziertes Postfach weiter. Das System überwacht es per IMAP und nimmt sie automatisch auf.',
+        'step2.title': 'Bewerberdaten-Extraktion',
+        'step2.desc': 'Benutzerdefiniertes JavaScript analysiert die weitergeleitete E-Mail-Kette, um Name und E-Mail-Adresse des ursprünglichen Absenders zu extrahieren. Verarbeitet mehrstufige Weiterleitungen, Yahoo/GMX-Formate, Umlaute und HTML-kodierte Adressen.',
+        'step3.title': 'Subdomain & Zugangsdaten generiert',
+        'step3.desc': 'Der Bewerbername wird in eine eindeutige Subdomain umgewandelt (Umlaut-Behandlung, Erkennung reservierter Namen, Kollisionsvermeidung). Ein sicheres 14-Zeichen-Passwort wird generiert.',
+        'step4.title': 'Website erstellt',
+        'step4.desc': 'Eine PHP-API auf dem Server richtet eine vollständige CMS-Installation ein: Subdomain-DNS, Datenbank, CMS-Core, Admin-Benutzer sowie vorinstallierter Page Builder und Formular-Plugins mit aktivierten Lizenzen.',
+        'step5.title': 'In SharePoint protokolliert',
+        'step5.desc': 'Bei Erfolg werden die Bewerberdaten, Subdomain, URL, Benutzername, Passwort und Datenbankname in einer SharePoint-Liste für das Team protokolliert. Fehler werden in einer separaten Fehlerliste erfasst.',
+        'step6.title': 'Onboarding-E-Mail gesendet',
+        'step6.desc': 'Der Bewerber erhält eine professionelle E-Mail mit seiner WP-Admin-URL, Zugangsdaten, dem Design-Briefing, SharePoint-Link zu Marken-Assets und der Frist für seine Testaufgabe. Alles vollständig als Template hinterlegt.',
+        'features.label': 'Features',
+        'features.title': 'Was es besonders macht',
+        'feat1.title': 'E-Mail-gesteuert',
+        'feat1.desc': 'Kein Dashboard nötig. Einfach die E-Mail des Bewerbers weiterleiten und die gesamte Pipeline läuft automatisch.',
+        'feat2.title': 'Intelligentes E-Mail-Parsing',
+        'feat2.desc': 'Extrahiert den ursprünglichen Bewerber aus verschachtelten Weiterleitungen. Verarbeitet Umlaute, HTML-Kodierung und internationale Namen.',
+        'feat3.title': 'Vollständiger CMS-Stack',
+        'feat3.desc': 'Jede Website wird mit Page Builder, Formular-Plugins, aktivierten Lizenzen und dem Unternehmens-Template ausgeliefert.',
+        'feat4.title': 'Kollisionssichere Subdomains',
+        'feat4.desc': 'Namensbereinigung mit Umlaut-Konvertierung, Erkennung reservierter Namen und Vermeidung von Duplikaten.',
+        'feat5.title': 'Fehlerverfolgung',
+        'feat5.desc': 'Fehler werden in einer separaten SharePoint-Liste mit vollständigem Kontext für schnelles Debugging protokolliert.',
+        'feat6.title': 'Vollständiges Audit-Log',
+        'feat6.desc': 'Jedes Onboarding wird in SharePoint und Google Sheets mit Zeitstempel, Zugangsdaten und Status protokolliert.',
+        'tech.label': 'Stack',
+        'tech.title': 'Eingesetzte Technologien',
+        'tech1.name': 'n8n', 'tech1.role': 'Workflow-Automatisierung',
+        'tech2.name': 'CMS', 'tech2.role': 'Website-Plattform',
+        'tech3.name': 'PHP', 'tech3.role': 'Bereitstellungs-API',
+        'tech4.name': 'JavaScript', 'tech4.role': 'E-Mail-Parsing-Logik',
+        'tech5.name': 'SharePoint', 'tech5.role': 'Protokollierung & Audit',
+        'tech6.name': 'SMTP / IMAP', 'tech6.role': 'E-Mail-Versand & -Empfang',
+        'tech7.name': 'Page Builder', 'tech7.role': 'Visueller Website-Editor',
+        'tech8.name': 'Form Plugin', 'tech8.role': 'Kontaktformulare',
+        'cta.label': 'Portfolio',
+        'cta.title': 'Weitere Projekte',
+        'cta.subtitle': 'Zurück zur Gesamtübersicht.',
+        'cta.back': 'Zurück zum Portfolio',
+        'cta.contact': 'Kontakt aufnehmen'
+      }
+    };
+
+    let currentLang = localStorage.getItem('lang') || 'en';
+
+    function setLang(lang) {
+      currentLang = lang;
+      localStorage.setItem('lang', lang);
+      document.documentElement.lang = lang;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang][key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+      document.querySelectorAll('.lang-option').forEach(opt => {
+        opt.classList.toggle('active', opt.dataset.lang === lang);
+      });
+    }
+
+    document.getElementById('langToggle').addEventListener('click', () => {
+      setLang(currentLang === 'en' ? 'de' : 'en');
+    });
+
+    if (currentLang !== 'en') setLang(currentLang);
   </script>
 
 </body>

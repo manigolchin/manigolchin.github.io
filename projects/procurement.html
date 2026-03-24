@@ -119,6 +119,24 @@
     }
     .nav-links a:hover { color: var(--text-primary); }
 
+    .lang-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.5rem 0.875rem;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 0.9375rem;
+      transition: border-color 0.2s ease;
+    }
+    .lang-toggle:hover { border-color: var(--accent); }
+    .lang-option { color: var(--text-muted); transition: color 0.2s ease; }
+    .lang-option.active { color: var(--accent); font-weight: 700; }
+    .lang-divider { color: var(--text-muted); font-size: 0.75rem; }
+
     .nav-mobile-toggle {
       display: none;
       background: none;
@@ -737,19 +755,26 @@
     <div class="nav-inner">
       <a href="../index.html" class="nav-logo" style="text-decoration: none;">mani<span>.</span>work</a>
       <ul class="nav-links" id="navLinks">
-        <li><a href="#overview">Overview</a></li>
-        <li><a href="#pipeline">How It Works</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#tech">Tech Stack</a></li>
-        <li><a href="#screenshots">Screenshots</a></li>
+        <li><a href="#overview" data-i18n="nav.overview">Overview</a></li>
+        <li><a href="#pipeline" data-i18n="nav.pipeline">How It Works</a></li>
+        <li><a href="#features" data-i18n="nav.features">Features</a></li>
+        <li><a href="#tech" data-i18n="nav.tech">Tech Stack</a></li>
+        <li><a href="#screenshots" data-i18n="nav.screenshots">Screenshots</a></li>
       </ul>
-      <button class="nav-mobile-toggle" id="navToggle" aria-label="Toggle menu">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-          <line x1="3" y1="6" x2="21" y2="6"/>
-          <line x1="3" y1="12" x2="21" y2="12"/>
-          <line x1="3" y1="18" x2="21" y2="18"/>
-        </svg>
-      </button>
+      <div style="display:flex;align-items:center;gap:0.75rem;">
+        <button class="lang-toggle" id="langToggle" aria-label="Switch language">
+          <span class="lang-option active" data-lang="en">EN</span>
+          <span class="lang-divider">/</span>
+          <span class="lang-option" data-lang="de">DE</span>
+        </button>
+        <button class="nav-mobile-toggle" id="navToggle" aria-label="Toggle menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
     </div>
   </nav>
 
@@ -762,18 +787,18 @@
     <div class="container hero-content">
       <a href="../index.html#projects" class="hero-back">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-        Back to Portfolio
+        <span data-i18n="hero.back">Back to Portfolio</span>
       </a>
       <div class="hero-badge">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-        Production System &middot; KALKU
+        <span data-i18n="hero.badge">Production System &middot; KALKU</span>
       </div>
       <h1>
         KALKU<br>
-        <span class="accent-text">Procurement</span><br>
-        Platform
+        <span class="accent-text" data-i18n="hero.h1accent">Procurement</span><br>
+        <span data-i18n="hero.h1suffix">Platform</span>
       </h1>
-      <p class="hero-description">
+      <p class="hero-description" data-i18n="hero.desc">
         Full-stack procurement automation for the German construction industry.
         AI-powered document classification, supplier matching, and tender dispatch &mdash;
         end to end, for multiple companies and trades.
@@ -781,19 +806,19 @@
       <div class="hero-stats">
         <div class="hero-stat">
           <span class="hero-stat-value"><span class="accent-text">5+</span></span>
-          <span class="hero-stat-label">Companies Onboarded</span>
+          <span class="hero-stat-label" data-i18n="hero.stat1">Companies Onboarded</span>
         </div>
         <div class="hero-stat">
           <span class="hero-stat-value"><span class="accent-text">90,000+</span></span>
-          <span class="hero-stat-label">Classified Positions</span>
+          <span class="hero-stat-label" data-i18n="hero.stat2">Classified Positions</span>
         </div>
         <div class="hero-stat">
           <span class="hero-stat-value"><span class="accent-text">25</span></span>
-          <span class="hero-stat-label">Trade Categories</span>
+          <span class="hero-stat-label" data-i18n="hero.stat3">Trade Categories</span>
         </div>
         <div class="hero-stat">
           <span class="hero-stat-value"><span class="accent-text">5</span></span>
-          <span class="hero-stat-label">Industry Trades</span>
+          <span class="hero-stat-label" data-i18n="hero.stat4">Industry Trades</span>
         </div>
       </div>
     </div>
@@ -803,25 +828,25 @@
   <section id="overview">
     <div class="container">
       <div class="reveal">
-        <div class="section-label">Overview</div>
-        <div class="section-title">What It Does</div>
+        <div class="section-label" data-i18n="overview.label">Overview</div>
+        <div class="section-title" data-i18n="overview.title">What It Does</div>
       </div>
       <div class="overview-text reveal reveal-delay-1">
-        <p>
+        <p data-i18n="overview.p1">
           The KALKU Procurement Platform replaces a manual, error-prone workflow with an
           intelligent end-to-end system. German construction companies receive large tender
           documents (Leistungsverzeichnisse) containing hundreds or thousands of line items.
           Each item must be classified by trade, matched to the right suppliers, and sent out
           as a targeted request for quotation &mdash; all under tight deadlines.
         </p>
-        <p>
+        <p data-i18n="overview.p2">
           This platform automates the entire pipeline: parsing GAEB/XML and PDF tender documents,
           using AI (Claude and GPT-4) to classify every position into the correct trade category,
           detecting manufacturers, splitting the original document into per-category PDFs,
           matching suppliers from the database, and dispatching bulk tender emails with
           delivery tracking and automated reminders.
         </p>
-        <p>
+        <p data-i18n="overview.p3">
           Built as a multi-tenant system supporting five different trades &mdash; GaLaBau (landscaping),
           Elektro (electrical), Fenster (windows), Haustechnik (HVAC/plumbing), and Tiefbau
           (deep construction) &mdash; each with its own classification rules, category structures,
@@ -835,9 +860,9 @@
   <section id="pipeline" style="background: var(--bg-secondary);">
     <div class="container">
       <div class="reveal">
-        <div class="section-label">Pipeline</div>
-        <div class="section-title">How It Works</div>
-        <p class="section-subtitle">
+        <div class="section-label" data-i18n="pipeline.label">Pipeline</div>
+        <div class="section-title" data-i18n="pipeline.title">How It Works</div>
+        <p class="section-subtitle" data-i18n="pipeline.subtitle">
           A 10-step automated pipeline that takes a raw tender document and delivers targeted
           supplier requests &mdash; with AI at the core.
         </p>
@@ -849,9 +874,9 @@
           <div class="pipeline-content">
             <div class="pipeline-title">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-              Upload &amp; Parse
+              <span data-i18n="pipe.1.title">Upload &amp; Parse</span>
             </div>
-            <div class="pipeline-desc">Users upload construction tender documents in GAEB/XML or PDF format. The system parses all positions (line items) and extracts structured data for processing.</div>
+            <div class="pipeline-desc" data-i18n="pipe.1.desc">Users upload construction tender documents in GAEB/XML or PDF format. The system parses all positions (line items) and extracts structured data for processing.</div>
           </div>
           <div class="pipeline-connector"></div>
         </div>
@@ -861,9 +886,9 @@
           <div class="pipeline-content">
             <div class="pipeline-title">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 0-4 4c0 2 2 3 2 6h4c0-3 2-4 2-6a4 4 0 0 0-4-4z"/><line x1="10" y1="16" x2="14" y2="16"/><line x1="10" y1="19" x2="14" y2="19"/><line x1="11" y1="22" x2="13" y2="22"/></svg>
-              AI Classification
+              <span data-i18n="pipe.2.title">AI Classification</span>
             </div>
-            <div class="pipeline-desc">Claude AI and GPT-4 classify every position into trade categories. For GaLaBau alone, there are 25 categories (Baustoffe, Kanal, Pflaster, Entsorgung, Beton, Markierung, and more). Each position receives a category, a needs_rfq flag, and manufacturer detection.</div>
+            <div class="pipeline-desc" data-i18n="pipe.2.desc">Claude AI and GPT-4 classify every position into trade categories. For GaLaBau alone, there are 25 categories (Baustoffe, Kanal, Pflaster, Entsorgung, Beton, Markierung, and more). Each position receives a category, a needs_rfq flag, and manufacturer detection.</div>
           </div>
           <div class="pipeline-connector"></div>
         </div>
@@ -873,9 +898,9 @@
           <div class="pipeline-content">
             <div class="pipeline-title">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-              Multi-Company Routing
+              <span data-i18n="pipe.3.title">Multi-Company Routing</span>
             </div>
-            <div class="pipeline-desc">Supports 5+ companies with different trade types: GaLaBau, Elektro, Fenster, Haustechnik, and Tiefbau. Each company has its own classification rules, category structures, AI prompts, and supplier networks.</div>
+            <div class="pipeline-desc" data-i18n="pipe.3.desc">Supports 5+ companies with different trade types: GaLaBau, Elektro, Fenster, Haustechnik, and Tiefbau. Each company has its own classification rules, category structures, AI prompts, and supplier networks.</div>
           </div>
           <div class="pipeline-connector"></div>
         </div>
@@ -885,9 +910,9 @@
           <div class="pipeline-content">
             <div class="pipeline-title">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-              Smart PDF Generation
+              <span data-i18n="pipe.4.title">Smart PDF Generation</span>
             </div>
-            <div class="pipeline-desc">The original tender document is split into per-category PDFs. When manufacturers are detected in positions, the system additionally creates per-manufacturer PDFs for targeted supplier outreach.</div>
+            <div class="pipeline-desc" data-i18n="pipe.4.desc">The original tender document is split into per-category PDFs. When manufacturers are detected in positions, the system additionally creates per-manufacturer PDFs for targeted supplier outreach.</div>
           </div>
           <div class="pipeline-connector"></div>
         </div>
@@ -897,9 +922,9 @@
           <div class="pipeline-content">
             <div class="pipeline-title">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              Supplier Matching
+              <span data-i18n="pipe.5.title">Supplier Matching</span>
             </div>
-            <div class="pipeline-desc">Categories are automatically matched to suppliers from the database. Smart cross-referencing ensures positions reach all relevant vendors &mdash; for example, Kanal positions are also sent to Baustoffe suppliers.</div>
+            <div class="pipeline-desc" data-i18n="pipe.5.desc">Categories are automatically matched to suppliers from the database. Smart cross-referencing ensures positions reach all relevant vendors &mdash; for example, Kanal positions are also sent to Baustoffe suppliers.</div>
           </div>
           <div class="pipeline-connector"></div>
         </div>
@@ -909,9 +934,9 @@
           <div class="pipeline-content">
             <div class="pipeline-title">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              Tender Dispatch
+              <span data-i18n="pipe.6.title">Tender Dispatch</span>
             </div>
-            <div class="pipeline-desc">An approval workflow where the system prepares draft emails with attachments. Users review, edit, and approve before the system bulk-sends to all matched suppliers via SMTP with proper threading and Message-ID headers.</div>
+            <div class="pipeline-desc" data-i18n="pipe.6.desc">An approval workflow where the system prepares draft emails with attachments. Users review, edit, and approve before the system bulk-sends to all matched suppliers via SMTP with proper threading and Message-ID headers.</div>
           </div>
           <div class="pipeline-connector"></div>
         </div>
@@ -921,9 +946,9 @@
           <div class="pipeline-content">
             <div class="pipeline-title">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-              Email Tracking
+              <span data-i18n="pipe.7.title">Email Tracking</span>
             </div>
-            <div class="pipeline-desc">Full delivery status tracking across the pipeline: sent, delivered, opened, responded, or error. Each status transition is recorded, giving users real-time visibility into supplier engagement.</div>
+            <div class="pipeline-desc" data-i18n="pipe.7.desc">Full delivery status tracking across the pipeline: sent, delivered, opened, responded, or error. Each status transition is recorded, giving users real-time visibility into supplier engagement.</div>
           </div>
           <div class="pipeline-connector"></div>
         </div>
@@ -933,9 +958,9 @@
           <div class="pipeline-content">
             <div class="pipeline-title">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              Automated Reminders
+              <span data-i18n="pipe.8.title">Automated Reminders</span>
             </div>
-            <div class="pipeline-desc">The system sends reminder emails 2 days before the submission deadline, threaded to the original RFQ email. Includes urgent/short-notice templates with dynamic timing (heute/morgen/am Wochentag).</div>
+            <div class="pipeline-desc" data-i18n="pipe.8.desc">The system sends reminder emails 2 days before the submission deadline, threaded to the original RFQ email. Includes urgent/short-notice templates with dynamic timing (heute/morgen/am Wochentag).</div>
           </div>
           <div class="pipeline-connector"></div>
         </div>
@@ -945,9 +970,9 @@
           <div class="pipeline-content">
             <div class="pipeline-title">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-              Position Archive
+              <span data-i18n="pipe.9.title">Position Archive</span>
             </div>
-            <div class="pipeline-desc">A learning knowledge base: every classified position is permanently archived. Human corrections override AI results and are never overwritten. The archive is shared across companies of the same trade type, so new companies get instant classification data.</div>
+            <div class="pipeline-desc" data-i18n="pipe.9.desc">A learning knowledge base: every classified position is permanently archived. Human corrections override AI results and are never overwritten. The archive is shared across companies of the same trade type, so new companies get instant classification data.</div>
           </div>
           <div class="pipeline-connector"></div>
         </div>
@@ -957,9 +982,9 @@
           <div class="pipeline-content">
             <div class="pipeline-title">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-              Inbox Monitoring
+              <span data-i18n="pipe.10.title">Inbox Monitoring</span>
             </div>
-            <div class="pipeline-desc">Watches for supplier responses and matches them to projects using smart keyword and regex matching with umlaut normalization (ae/oe/ue). Automatically organizes responses into per-supplier folders.</div>
+            <div class="pipeline-desc" data-i18n="pipe.10.desc">Watches for supplier responses and matches them to projects using smart keyword and regex matching with umlaut normalization (ae/oe/ue). Automatically organizes responses into per-supplier folders.</div>
           </div>
         </div>
 
@@ -971,9 +996,9 @@
   <section id="features">
     <div class="container">
       <div class="reveal">
-        <div class="section-label">Features</div>
-        <div class="section-title">Key Capabilities</div>
-        <p class="section-subtitle">
+        <div class="section-label" data-i18n="features.label">Features</div>
+        <div class="section-title" data-i18n="features.title">Key Capabilities</div>
+        <p class="section-subtitle" data-i18n="features.subtitle">
           Core features that power the procurement automation platform.
         </p>
       </div>
@@ -983,64 +1008,64 @@
           <div class="feature-icon green">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 0-4 4c0 2 2 3 2 6h4c0-3 2-4 2-6a4 4 0 0 0-4-4z"/><line x1="10" y1="16" x2="14" y2="16"/><line x1="10" y1="19" x2="14" y2="19"/><line x1="11" y1="22" x2="13" y2="22"/></svg>
           </div>
-          <div class="feature-card-title">AI Classification</div>
-          <div class="feature-card-desc">Dual-AI pipeline using Claude and GPT-4 to classify thousands of construction positions into 25 trade categories with manufacturer detection.</div>
+          <div class="feature-card-title" data-i18n="feat.1.title">AI Classification</div>
+          <div class="feature-card-desc" data-i18n="feat.1.desc">Dual-AI pipeline using Claude and GPT-4 to classify thousands of construction positions into 25 trade categories with manufacturer detection.</div>
         </div>
 
         <div class="feature-card reveal reveal-delay-2">
           <div class="feature-icon blue">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
-          <div class="feature-card-title">Multi-Company</div>
-          <div class="feature-card-desc">Five distinct trade types with unique classification rules, AI prompts, and supplier networks. Multi-tenant architecture with company-level isolation.</div>
+          <div class="feature-card-title" data-i18n="feat.2.title">Multi-Company</div>
+          <div class="feature-card-desc" data-i18n="feat.2.desc">Five distinct trade types with unique classification rules, AI prompts, and supplier networks. Multi-tenant architecture with company-level isolation.</div>
         </div>
 
         <div class="feature-card reveal reveal-delay-3">
           <div class="feature-icon purple">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
           </div>
-          <div class="feature-card-title">PDF Generation</div>
-          <div class="feature-card-desc">Automatically splits tender documents into per-category and per-manufacturer PDFs for targeted supplier outreach.</div>
+          <div class="feature-card-title" data-i18n="feat.3.title">PDF Generation</div>
+          <div class="feature-card-desc" data-i18n="feat.3.desc">Automatically splits tender documents into per-category and per-manufacturer PDFs for targeted supplier outreach.</div>
         </div>
 
         <div class="feature-card reveal reveal-delay-4">
           <div class="feature-icon amber">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           </div>
-          <div class="feature-card-title">Supplier Matching</div>
-          <div class="feature-card-desc">Auto-matches categories to suppliers with intelligent cross-referencing. Kanal to Baustoffe, Heizung to Sanitaer, and more.</div>
+          <div class="feature-card-title" data-i18n="feat.4.title">Supplier Matching</div>
+          <div class="feature-card-desc" data-i18n="feat.4.desc">Auto-matches categories to suppliers with intelligent cross-referencing. Kanal to Baustoffe, Heizung to Sanitaer, and more.</div>
         </div>
 
         <div class="feature-card reveal reveal-delay-5">
           <div class="feature-icon green">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           </div>
-          <div class="feature-card-title">Tender Dispatch</div>
-          <div class="feature-card-desc">Review-and-approve workflow for bulk email dispatch. Draft preparation, user editing, and SMTP sending with proper email threading.</div>
+          <div class="feature-card-title" data-i18n="feat.5.title">Tender Dispatch</div>
+          <div class="feature-card-desc" data-i18n="feat.5.desc">Review-and-approve workflow for bulk email dispatch. Draft preparation, user editing, and SMTP sending with proper email threading.</div>
         </div>
 
         <div class="feature-card reveal reveal-delay-6">
           <div class="feature-icon blue">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
           </div>
-          <div class="feature-card-title">Email Tracking</div>
-          <div class="feature-card-desc">Real-time delivery status tracking: sent, delivered, opened, responded. Full visibility into supplier engagement across every RFQ.</div>
+          <div class="feature-card-title" data-i18n="feat.6.title">Email Tracking</div>
+          <div class="feature-card-desc" data-i18n="feat.6.desc">Real-time delivery status tracking: sent, delivered, opened, responded. Full visibility into supplier engagement across every RFQ.</div>
         </div>
 
         <div class="feature-card reveal reveal-delay-7">
           <div class="feature-icon purple">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           </div>
-          <div class="feature-card-title">Automated Reminders</div>
-          <div class="feature-card-desc">Deadline-aware reminders sent 2 days before submission, threaded to original emails. Includes urgent templates with dynamic timing.</div>
+          <div class="feature-card-title" data-i18n="feat.7.title">Automated Reminders</div>
+          <div class="feature-card-desc" data-i18n="feat.7.desc">Deadline-aware reminders sent 2 days before submission, threaded to original emails. Includes urgent templates with dynamic timing.</div>
         </div>
 
         <div class="feature-card reveal reveal-delay-8">
           <div class="feature-icon amber">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
           </div>
-          <div class="feature-card-title">Position Archive</div>
-          <div class="feature-card-desc">Self-learning knowledge base. Human corrections override AI. Shared across same-trade companies for instant classification bootstrapping.</div>
+          <div class="feature-card-title" data-i18n="feat.8.title">Position Archive</div>
+          <div class="feature-card-desc" data-i18n="feat.8.desc">Self-learning knowledge base. Human corrections override AI. Shared across same-trade companies for instant classification bootstrapping.</div>
         </div>
 
       </div>
@@ -1051,9 +1076,9 @@
   <section id="tech" style="background: var(--bg-secondary);">
     <div class="container">
       <div class="reveal">
-        <div class="section-label">Stack</div>
-        <div class="section-title">Technologies &amp; Tools</div>
-        <p class="section-subtitle">
+        <div class="section-label" data-i18n="tech.label">Stack</div>
+        <div class="section-title" data-i18n="tech.title">Technologies &amp; Tools</div>
+        <p class="section-subtitle" data-i18n="tech.subtitle">
           The full technology stack powering the platform, organized by layer.
         </p>
       </div>
@@ -1064,7 +1089,7 @@
             <div class="tech-layer-icon" style="background: var(--accent-dim); border: 1px solid rgba(0,230,118,0.12); border-radius: 8px;">
               <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
             </div>
-            <div class="tech-layer-title">Backend</div>
+            <div class="tech-layer-title" data-i18n="tech.backend">Backend</div>
           </div>
           <div class="tech-pills">
             <span class="tech-pill green">Python</span>
@@ -1080,7 +1105,7 @@
             <div class="tech-layer-icon" style="background: var(--accent-secondary-dim); border: 1px solid rgba(37,99,235,0.15); border-radius: 8px;">
               <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
             </div>
-            <div class="tech-layer-title">Frontend</div>
+            <div class="tech-layer-title" data-i18n="tech.frontend">Frontend</div>
           </div>
           <div class="tech-pills">
             <span class="tech-pill blue">React 19</span>
@@ -1096,7 +1121,7 @@
             <div class="tech-layer-icon" style="background: rgba(168,85,247,0.1); border: 1px solid rgba(168,85,247,0.15); border-radius: 8px;">
               <svg viewBox="0 0 24 24" fill="none" stroke="#A855F7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 0-4 4c0 2 2 3 2 6h4c0-3 2-4 2-6a4 4 0 0 0-4-4z"/><line x1="10" y1="16" x2="14" y2="16"/><line x1="10" y1="19" x2="14" y2="19"/></svg>
             </div>
-            <div class="tech-layer-title">AI / ML</div>
+            <div class="tech-layer-title" data-i18n="tech.ai">AI / ML</div>
           </div>
           <div class="tech-pills">
             <span class="tech-pill purple">Anthropic Claude</span>
@@ -1110,7 +1135,7 @@
             <div class="tech-layer-icon" style="background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.15); border-radius: 8px;">
               <svg viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
             </div>
-            <div class="tech-layer-title">Infrastructure</div>
+            <div class="tech-layer-title" data-i18n="tech.infra">Infrastructure</div>
           </div>
           <div class="tech-pills">
             <span class="tech-pill amber">Docker</span>
@@ -1125,7 +1150,7 @@
             <div class="tech-layer-icon" style="background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.15); border-radius: 8px;">
               <svg viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             </div>
-            <div class="tech-layer-title">Email &amp; Formats</div>
+            <div class="tech-layer-title" data-i18n="tech.email">Email &amp; Formats</div>
           </div>
           <div class="tech-pills">
             <span class="tech-pill red">SMTP / Office365</span>
@@ -1140,7 +1165,7 @@
             <div class="tech-layer-icon" style="background: var(--accent-dim); border: 1px solid rgba(0,230,118,0.12); border-radius: 8px;">
               <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </div>
-            <div class="tech-layer-title">Security</div>
+            <div class="tech-layer-title" data-i18n="tech.security">Security</div>
           </div>
           <div class="tech-pills">
             <span class="tech-pill green">JWT Auth</span>
@@ -1158,9 +1183,9 @@
   <section id="screenshots">
     <div class="container">
       <div class="reveal">
-        <div class="section-label">Preview</div>
-        <div class="section-title">Platform in Action</div>
-        <p class="section-subtitle">
+        <div class="section-label" data-i18n="screenshots.label">Preview</div>
+        <div class="section-title" data-i18n="screenshots.title">Platform in Action</div>
+        <p class="section-subtitle" data-i18n="screenshots.subtitle">
           A look inside the production system handling real construction tenders.
         </p>
       </div>
@@ -1169,48 +1194,48 @@
         <div class="screenshot-slot reveal reveal-delay-1">
           <img src="images/dashboard.png" alt="KALKU Procurement Dashboard showing active projects, positions, rules and suppliers" class="screenshot-img" loading="lazy">
           <div class="screenshot-label">
-            Dashboard
-            <div class="screenshot-label-sub">Live overview with 15 active projects, 2,041 positions, 101 learned rules, and 97 suppliers</div>
+            <span data-i18n="shot.1.title">Dashboard</span>
+            <div class="screenshot-label-sub" data-i18n="shot.1.sub">Live overview with 15 active projects, 2,041 positions, 101 learned rules, and 97 suppliers</div>
           </div>
         </div>
 
         <div class="screenshot-slot reveal reveal-delay-2">
           <img src="images/versand.png" alt="Tender dispatch page with email drafts and per-category PDF attachments" class="screenshot-img" loading="lazy">
           <div class="screenshot-label">
-            Tender Dispatch
-            <div class="screenshot-label-sub">Review and send tender emails per trade category with auto-generated PDF attachments</div>
+            <span data-i18n="shot.2.title">Tender Dispatch</span>
+            <div class="screenshot-label-sub" data-i18n="shot.2.sub">Review and send tender emails per trade category with auto-generated PDF attachments</div>
           </div>
         </div>
 
         <div class="screenshot-slot reveal reveal-delay-1">
           <img src="images/posteingang.png" alt="Inbox monitoring showing 272 supplier responses matched to projects" class="screenshot-img" loading="lazy">
           <div class="screenshot-label">
-            Inbox Monitoring
-            <div class="screenshot-label-sub">272 incoming supplier responses auto-classified as offers, rejections, or inquiries</div>
+            <span data-i18n="shot.3.title">Inbox Monitoring</span>
+            <div class="screenshot-label-sub" data-i18n="shot.3.sub">272 incoming supplier responses auto-classified as offers, rejections, or inquiries</div>
           </div>
         </div>
 
         <div class="screenshot-slot reveal reveal-delay-2">
           <img src="images/submission.png" alt="Submission results page with supplier offer list and SharePoint integration" class="screenshot-img" loading="lazy">
           <div class="screenshot-label">
-            Submission Results
-            <div class="screenshot-label-sub">14 supplier offers tracked with SharePoint sync and PDF distribution</div>
+            <span data-i18n="shot.4.title">Submission Results</span>
+            <div class="screenshot-label-sub" data-i18n="shot.4.sub">14 supplier offers tracked with SharePoint sync and PDF distribution</div>
           </div>
         </div>
 
         <div class="screenshot-slot reveal reveal-delay-1">
           <img src="images/erinnerungen.png" alt="Reminder system showing deadline-based follow-up emails to suppliers" class="screenshot-img" loading="lazy">
           <div class="screenshot-label">
-            Automated Reminders
-            <div class="screenshot-label-sub">Smart deadline reminders sent to 60 non-responding suppliers with threaded email replies</div>
+            <span data-i18n="shot.5.title">Automated Reminders</span>
+            <div class="screenshot-label-sub" data-i18n="shot.5.sub">Smart deadline reminders sent to 60 non-responding suppliers with threaded email replies</div>
           </div>
         </div>
 
         <div class="screenshot-slot reveal reveal-delay-2">
           <img src="images/automatisierung.png" alt="Automation pipeline with n8n workflow integration and processing history" class="screenshot-img" loading="lazy">
           <div class="screenshot-label">
-            Automation Pipeline
-            <div class="screenshot-label-sub">One-click workflow: scan SharePoint, parse GAEB, classify with AI, generate trade PDFs</div>
+            <span data-i18n="shot.6.title">Automation Pipeline</span>
+            <div class="screenshot-label-sub" data-i18n="shot.6.sub">One-click workflow: scan SharePoint, parse GAEB, classify with AI, generate trade PDFs</div>
           </div>
         </div>
 
@@ -1222,16 +1247,16 @@
   <section class="cta-section">
     <div class="container">
       <div class="reveal">
-        <div class="section-label">Portfolio</div>
-        <div class="section-title">Explore More Work</div>
-        <p class="section-subtitle">
+        <div class="section-label" data-i18n="cta.label">Portfolio</div>
+        <div class="section-title" data-i18n="cta.title">Explore More Work</div>
+        <p class="section-subtitle" data-i18n="cta.subtitle">
           This is one of several projects in my portfolio. Head back to see the full picture.
         </p>
       </div>
       <div class="reveal reveal-delay-1" style="margin-top: 2rem;">
         <a href="../index.html#projects" class="btn btn-primary">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-          Back to Portfolio
+          <span data-i18n="cta.btn">Back to Portfolio</span>
         </a>
       </div>
     </div>
@@ -1322,6 +1347,215 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeLightbox();
     });
+
+    // i18n Language Toggle
+    const translations = {
+      en: {
+        'nav.overview': 'Overview',
+        'nav.pipeline': 'How It Works',
+        'nav.features': 'Features',
+        'nav.tech': 'Tech Stack',
+        'nav.screenshots': 'Screenshots',
+        'hero.back': 'Back to Portfolio',
+        'hero.badge': 'Production System \u00b7 KALKU',
+        'hero.h1accent': 'Procurement',
+        'hero.h1suffix': 'Platform',
+        'hero.desc': 'Full-stack procurement automation for the German construction industry. AI-powered document classification, supplier matching, and tender dispatch \u2014 end to end, for multiple companies and trades.',
+        'hero.stat1': 'Companies Onboarded',
+        'hero.stat2': 'Classified Positions',
+        'hero.stat3': 'Trade Categories',
+        'hero.stat4': 'Industry Trades',
+        'overview.label': 'Overview',
+        'overview.title': 'What It Does',
+        'overview.p1': 'The KALKU Procurement Platform replaces a manual, error-prone workflow with an intelligent end-to-end system. German construction companies receive large tender documents (Leistungsverzeichnisse) containing hundreds or thousands of line items. Each item must be classified by trade, matched to the right suppliers, and sent out as a targeted request for quotation \u2014 all under tight deadlines.',
+        'overview.p2': 'This platform automates the entire pipeline: parsing GAEB/XML and PDF tender documents, using AI (Claude and GPT-4) to classify every position into the correct trade category, detecting manufacturers, splitting the original document into per-category PDFs, matching suppliers from the database, and dispatching bulk tender emails with delivery tracking and automated reminders.',
+        'overview.p3': 'Built as a multi-tenant system supporting five different trades \u2014 GaLaBau (landscaping), Elektro (electrical), Fenster (windows), Haustechnik (HVAC/plumbing), and Tiefbau (deep construction) \u2014 each with its own classification rules, category structures, and supplier networks.',
+        'pipeline.label': 'Pipeline',
+        'pipeline.title': 'How It Works',
+        'pipeline.subtitle': 'A 10-step automated pipeline that takes a raw tender document and delivers targeted supplier requests \u2014 with AI at the core.',
+        'pipe.1.title': 'Upload & Parse',
+        'pipe.1.desc': 'Users upload construction tender documents in GAEB/XML or PDF format. The system parses all positions (line items) and extracts structured data for processing.',
+        'pipe.2.title': 'AI Classification',
+        'pipe.2.desc': 'Claude AI and GPT-4 classify every position into trade categories. For GaLaBau alone, there are 25 categories (Baustoffe, Kanal, Pflaster, Entsorgung, Beton, Markierung, and more). Each position receives a category, a needs_rfq flag, and manufacturer detection.',
+        'pipe.3.title': 'Multi-Company Routing',
+        'pipe.3.desc': 'Supports 5+ companies with different trade types: GaLaBau, Elektro, Fenster, Haustechnik, and Tiefbau. Each company has its own classification rules, category structures, AI prompts, and supplier networks.',
+        'pipe.4.title': 'Smart PDF Generation',
+        'pipe.4.desc': 'The original tender document is split into per-category PDFs. When manufacturers are detected in positions, the system additionally creates per-manufacturer PDFs for targeted supplier outreach.',
+        'pipe.5.title': 'Supplier Matching',
+        'pipe.5.desc': 'Categories are automatically matched to suppliers from the database. Smart cross-referencing ensures positions reach all relevant vendors \u2014 for example, Kanal positions are also sent to Baustoffe suppliers.',
+        'pipe.6.title': 'Tender Dispatch',
+        'pipe.6.desc': 'An approval workflow where the system prepares draft emails with attachments. Users review, edit, and approve before the system bulk-sends to all matched suppliers via SMTP with proper threading and Message-ID headers.',
+        'pipe.7.title': 'Email Tracking',
+        'pipe.7.desc': 'Full delivery status tracking across the pipeline: sent, delivered, opened, responded, or error. Each status transition is recorded, giving users real-time visibility into supplier engagement.',
+        'pipe.8.title': 'Automated Reminders',
+        'pipe.8.desc': 'The system sends reminder emails 2 days before the submission deadline, threaded to the original RFQ email. Includes urgent/short-notice templates with dynamic timing (heute/morgen/am Wochentag).',
+        'pipe.9.title': 'Position Archive',
+        'pipe.9.desc': 'A learning knowledge base: every classified position is permanently archived. Human corrections override AI results and are never overwritten. The archive is shared across companies of the same trade type, so new companies get instant classification data.',
+        'pipe.10.title': 'Inbox Monitoring',
+        'pipe.10.desc': 'Watches for supplier responses and matches them to projects using smart keyword and regex matching with umlaut normalization (ae/oe/ue). Automatically organizes responses into per-supplier folders.',
+        'features.label': 'Features',
+        'features.title': 'Key Capabilities',
+        'features.subtitle': 'Core features that power the procurement automation platform.',
+        'feat.1.title': 'AI Classification',
+        'feat.1.desc': 'Dual-AI pipeline using Claude and GPT-4 to classify thousands of construction positions into 25 trade categories with manufacturer detection.',
+        'feat.2.title': 'Multi-Company',
+        'feat.2.desc': 'Five distinct trade types with unique classification rules, AI prompts, and supplier networks. Multi-tenant architecture with company-level isolation.',
+        'feat.3.title': 'PDF Generation',
+        'feat.3.desc': 'Automatically splits tender documents into per-category and per-manufacturer PDFs for targeted supplier outreach.',
+        'feat.4.title': 'Supplier Matching',
+        'feat.4.desc': 'Auto-matches categories to suppliers with intelligent cross-referencing. Kanal to Baustoffe, Heizung to Sanitaer, and more.',
+        'feat.5.title': 'Tender Dispatch',
+        'feat.5.desc': 'Review-and-approve workflow for bulk email dispatch. Draft preparation, user editing, and SMTP sending with proper email threading.',
+        'feat.6.title': 'Email Tracking',
+        'feat.6.desc': 'Real-time delivery status tracking: sent, delivered, opened, responded. Full visibility into supplier engagement across every RFQ.',
+        'feat.7.title': 'Automated Reminders',
+        'feat.7.desc': 'Deadline-aware reminders sent 2 days before submission, threaded to original emails. Includes urgent templates with dynamic timing.',
+        'feat.8.title': 'Position Archive',
+        'feat.8.desc': 'Self-learning knowledge base. Human corrections override AI. Shared across same-trade companies for instant classification bootstrapping.',
+        'tech.label': 'Stack',
+        'tech.title': 'Technologies & Tools',
+        'tech.subtitle': 'The full technology stack powering the platform, organized by layer.',
+        'tech.backend': 'Backend',
+        'tech.frontend': 'Frontend',
+        'tech.ai': 'AI / ML',
+        'tech.infra': 'Infrastructure',
+        'tech.email': 'Email & Formats',
+        'tech.security': 'Security',
+        'screenshots.label': 'Preview',
+        'screenshots.title': 'Platform in Action',
+        'screenshots.subtitle': 'A look inside the production system handling real construction tenders.',
+        'shot.1.title': 'Dashboard',
+        'shot.1.sub': 'Live overview with 15 active projects, 2,041 positions, 101 learned rules, and 97 suppliers',
+        'shot.2.title': 'Tender Dispatch',
+        'shot.2.sub': 'Review and send tender emails per trade category with auto-generated PDF attachments',
+        'shot.3.title': 'Inbox Monitoring',
+        'shot.3.sub': '272 incoming supplier responses auto-classified as offers, rejections, or inquiries',
+        'shot.4.title': 'Submission Results',
+        'shot.4.sub': '14 supplier offers tracked with SharePoint sync and PDF distribution',
+        'shot.5.title': 'Automated Reminders',
+        'shot.5.sub': 'Smart deadline reminders sent to 60 non-responding suppliers with threaded email replies',
+        'shot.6.title': 'Automation Pipeline',
+        'shot.6.sub': 'One-click workflow: scan SharePoint, parse GAEB, classify with AI, generate trade PDFs',
+        'cta.label': 'Portfolio',
+        'cta.title': 'Explore More Work',
+        'cta.subtitle': 'This is one of several projects in my portfolio. Head back to see the full picture.',
+        'cta.btn': 'Back to Portfolio'
+      },
+      de: {
+        'nav.overview': '\u00dcberblick',
+        'nav.pipeline': 'So funktioniert es',
+        'nav.features': 'Funktionen',
+        'nav.tech': 'Technologien',
+        'nav.screenshots': 'Screenshots',
+        'hero.back': 'Zur\u00fcck zum Portfolio',
+        'hero.badge': 'Produktivsystem \u00b7 KALKU',
+        'hero.h1accent': 'Beschaffungs\u00adplattform',
+        'hero.h1suffix': '',
+        'hero.desc': 'Full-Stack-Beschaffungsautomatisierung f\u00fcr die deutsche Bauindustrie. KI-gest\u00fctzte Dokumentenklassifizierung, Lieferantenzuordnung und Ausschreibungsversand \u2014 durchg\u00e4ngig, f\u00fcr mehrere Unternehmen und Gewerke.',
+        'hero.stat1': 'Unternehmen angebunden',
+        'hero.stat2': 'Klassifizierte Positionen',
+        'hero.stat3': 'Gewerke-Kategorien',
+        'hero.stat4': 'Branchen-Gewerke',
+        'overview.label': '\u00dcberblick',
+        'overview.title': 'Was die Plattform leistet',
+        'overview.p1': 'Die KALKU-Beschaffungsplattform ersetzt einen manuellen, fehleranf\u00e4lligen Workflow durch ein intelligentes End-to-End-System. Deutsche Bauunternehmen erhalten umfangreiche Ausschreibungsunterlagen (Leistungsverzeichnisse) mit Hunderten oder Tausenden von Positionen. Jede Position muss nach Gewerk klassifiziert, den richtigen Lieferanten zugeordnet und als gezielte Preisanfrage versendet werden \u2014 alles unter engen Fristen.',
+        'overview.p2': 'Die Plattform automatisiert die gesamte Pipeline: Parsen von GAEB/XML- und PDF-Ausschreibungsunterlagen, KI-gest\u00fctzte Klassifizierung jeder Position in die richtige Gewerke-Kategorie (Claude und GPT-4), Herstellererkennung, Aufteilen des Originaldokuments in kategoriebasierte PDFs, Lieferantenzuordnung aus der Datenbank sowie Massenversand von Preisanfragen mit Zustellungsverfolgung und automatischen Erinnerungen.',
+        'overview.p3': 'Aufgebaut als mandantenf\u00e4higes System mit f\u00fcnf verschiedenen Gewerken \u2014 GaLaBau (Garten- und Landschaftsbau), Elektro, Fenster, Haustechnik (SHK/L\u00fcftung) und Tiefbau \u2014 jeweils mit eigenen Klassifizierungsregeln, Kategoriestrukturen und Lieferantennetzwerken.',
+        'pipeline.label': 'Pipeline',
+        'pipeline.title': 'So funktioniert es',
+        'pipeline.subtitle': 'Eine 10-Schritte-Pipeline, die aus einem Roh-Leistungsverzeichnis gezielte Lieferantenanfragen erstellt \u2014 mit KI im Kern.',
+        'pipe.1.title': 'Upload & Parsen',
+        'pipe.1.desc': 'Nutzer laden Ausschreibungsunterlagen im GAEB/XML- oder PDF-Format hoch. Das System parst alle Positionen und extrahiert strukturierte Daten zur Weiterverarbeitung.',
+        'pipe.2.title': 'KI-Klassifizierung',
+        'pipe.2.desc': 'Claude AI und GPT-4 klassifizieren jede Position in Gewerke-Kategorien. Allein f\u00fcr den GaLaBau gibt es 25 Kategorien (Baustoffe, Kanal, Pflaster, Entsorgung, Beton, Markierung u.\u202fv.\u202fm.). Jede Position erh\u00e4lt eine Kategorie, ein Anfrage-Flag und eine Herstellererkennung.',
+        'pipe.3.title': 'Multi-Firmen-Routing',
+        'pipe.3.desc': 'Unterst\u00fctzt 5+ Unternehmen mit unterschiedlichen Gewerken: GaLaBau, Elektro, Fenster, Haustechnik und Tiefbau. Jedes Unternehmen hat eigene Klassifizierungsregeln, Kategoriestrukturen, KI-Prompts und Lieferantennetzwerke.',
+        'pipe.4.title': 'Intelligente PDF-Erzeugung',
+        'pipe.4.desc': 'Das Original-Leistungsverzeichnis wird in kategoriebasierte PDFs aufgeteilt. Wenn Hersteller in Positionen erkannt werden, erzeugt das System zus\u00e4tzlich herstellerspezifische PDFs f\u00fcr gezielte Lieferantenansprache.',
+        'pipe.5.title': 'Lieferantenzuordnung',
+        'pipe.5.desc': 'Kategorien werden automatisch mit Lieferanten aus der Datenbank abgeglichen. Intelligente Querverweise stellen sicher, dass Positionen alle relevanten Anbieter erreichen \u2014 z.\u202fB. werden Kanal-Positionen auch an Baustoffe-Lieferanten gesendet.',
+        'pipe.6.title': 'Ausschreibungsversand',
+        'pipe.6.desc': 'Ein Freigabe-Workflow, bei dem das System E-Mail-Entw\u00fcrfe mit Anh\u00e4ngen vorbereitet. Nutzer pr\u00fcfen, bearbeiten und geben frei, bevor das System per SMTP an alle zugeordneten Lieferanten versendet \u2014 mit korrektem E-Mail-Threading und Message-ID-Headern.',
+        'pipe.7.title': 'E-Mail-Tracking',
+        'pipe.7.desc': 'L\u00fcckenlose Zustellungsverfolgung \u00fcber die gesamte Pipeline: gesendet, zugestellt, ge\u00f6ffnet, beantwortet oder Fehler. Jede Status\u00e4nderung wird protokolliert und gibt Nutzern Echtzeit-Einblick in die Lieferantenreaktion.',
+        'pipe.8.title': 'Automatische Erinnerungen',
+        'pipe.8.desc': 'Das System versendet Erinnerungs-E-Mails 2 Tage vor Abgabefrist, verkn\u00fcpft als Antwort auf die urspr\u00fcngliche Anfrage-E-Mail. Enth\u00e4lt Eilvorlagen mit dynamischer Zeitangabe (heute/morgen/am Wochentag).',
+        'pipe.9.title': 'Positions-Archiv',
+        'pipe.9.desc': 'Eine lernende Wissensdatenbank: Jede klassifizierte Position wird dauerhaft archiviert. Manuelle Korrekturen \u00fcberschreiben KI-Ergebnisse und werden nie zur\u00fcckgesetzt. Das Archiv wird \u00fcber Unternehmen desselben Gewerks geteilt, sodass neue Firmen sofort Klassifizierungsdaten erhalten.',
+        'pipe.10.title': 'Posteingangs\u00fcberwachung',
+        'pipe.10.desc': '\u00dcberwacht Lieferantenantworten und ordnet sie Projekten zu \u2014 mittels intelligentem Keyword- und Regex-Matching mit Umlaut-Normalisierung (ae/oe/ue). Antworten werden automatisch in lieferantenspezifische Ordner einsortiert.',
+        'features.label': 'Funktionen',
+        'features.title': 'Hauptfunktionen',
+        'features.subtitle': 'Kernfunktionen, die die Beschaffungsautomatisierung antreiben.',
+        'feat.1.title': 'KI-Klassifizierung',
+        'feat.1.desc': 'Dual-KI-Pipeline mit Claude und GPT-4 zur Klassifizierung Tausender Baupositionen in 25 Gewerke-Kategorien mit Herstellererkennung.',
+        'feat.2.title': 'Multi-Mandant',
+        'feat.2.desc': 'F\u00fcnf unterschiedliche Gewerke mit eigenen Klassifizierungsregeln, KI-Prompts und Lieferantennetzwerken. Mandantenf\u00e4hige Architektur mit Firmen-Isolation.',
+        'feat.3.title': 'PDF-Erzeugung',
+        'feat.3.desc': 'Automatische Aufteilung von Ausschreibungsunterlagen in kategorie- und herstellerspezifische PDFs f\u00fcr gezielte Lieferantenansprache.',
+        'feat.4.title': 'Lieferantenzuordnung',
+        'feat.4.desc': 'Automatischer Abgleich von Kategorien mit Lieferanten durch intelligente Querverweise. Kanal zu Baustoffe, Heizung zu Sanit\u00e4r und mehr.',
+        'feat.5.title': 'Ausschreibungsversand',
+        'feat.5.desc': 'Pr\u00fcf- und Freigabe-Workflow f\u00fcr den Massen-E-Mail-Versand. Entwurfsvorbereitung, Nutzerbearbeitung und SMTP-Versand mit korrektem E-Mail-Threading.',
+        'feat.6.title': 'E-Mail-Tracking',
+        'feat.6.desc': 'Echtzeit-Zustellungsverfolgung: gesendet, zugestellt, ge\u00f6ffnet, beantwortet. Volle Transparenz \u00fcber die Lieferantenreaktion bei jeder Preisanfrage.',
+        'feat.7.title': 'Automatische Erinnerungen',
+        'feat.7.desc': 'Fristgerechte Erinnerungen 2 Tage vor Abgabe, verkn\u00fcpft mit der Original-E-Mail. Enth\u00e4lt Eilvorlagen mit dynamischer Zeitangabe.',
+        'feat.8.title': 'Positions-Archiv',
+        'feat.8.desc': 'Selbstlernende Wissensdatenbank. Manuelle Korrekturen \u00fcberschreiben KI-Ergebnisse. Gewerke\u00fcbergreifend geteilt f\u00fcr sofortiges Klassifizierungs-Bootstrapping.',
+        'tech.label': 'Technologien',
+        'tech.title': 'Technologien & Tools',
+        'tech.subtitle': 'Der vollst\u00e4ndige Technologie-Stack der Plattform, gegliedert nach Schicht.',
+        'tech.backend': 'Backend',
+        'tech.frontend': 'Frontend',
+        'tech.ai': 'KI / ML',
+        'tech.infra': 'Infrastruktur',
+        'tech.email': 'E-Mail & Formate',
+        'tech.security': 'Sicherheit',
+        'screenshots.label': 'Vorschau',
+        'screenshots.title': 'Plattform in Aktion',
+        'screenshots.subtitle': 'Ein Blick in das Produktivsystem bei der Verarbeitung realer Bauausschreibungen.',
+        'shot.1.title': 'Dashboard',
+        'shot.1.sub': 'Live-\u00dcbersicht mit 15 aktiven Projekten, 2.041 Positionen, 101 gelernten Regeln und 97 Lieferanten',
+        'shot.2.title': 'Ausschreibungsversand',
+        'shot.2.sub': 'Pr\u00fcfung und Versand von Anfrage-E-Mails pro Gewerk mit automatisch erzeugten PDF-Anh\u00e4ngen',
+        'shot.3.title': 'Posteingang',
+        'shot.3.sub': '272 eingehende Lieferantenantworten automatisch als Angebote, Absagen oder R\u00fcckfragen klassifiziert',
+        'shot.4.title': 'Abgabeergebnisse',
+        'shot.4.sub': '14 Lieferantenangebote mit SharePoint-Synchronisierung und PDF-Verteilung erfasst',
+        'shot.5.title': 'Automatische Erinnerungen',
+        'shot.5.sub': 'Intelligente Fristerinnerungen an 60 nicht antwortende Lieferanten als verkn\u00fcpfte E-Mail-Antworten',
+        'shot.6.title': 'Automatisierungs-Pipeline',
+        'shot.6.sub': 'Ein-Klick-Workflow: SharePoint scannen, GAEB parsen, KI-Klassifizierung, Gewerke-PDFs erzeugen',
+        'cta.label': 'Portfolio',
+        'cta.title': 'Weitere Projekte',
+        'cta.subtitle': 'Dies ist eines von mehreren Projekten in meinem Portfolio. Zur\u00fcck zur Gesamt\u00fcbersicht.',
+        'cta.btn': 'Zur\u00fcck zum Portfolio'
+      }
+    };
+
+    let currentLang = localStorage.getItem('lang') || 'en';
+
+    function setLang(lang) {
+      currentLang = lang;
+      localStorage.setItem('lang', lang);
+      document.documentElement.lang = lang;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang][key] !== undefined) {
+          el.textContent = translations[lang][key];
+        }
+      });
+      document.querySelectorAll('.lang-option').forEach(opt => {
+        opt.classList.toggle('active', opt.dataset.lang === lang);
+      });
+    }
+
+    document.getElementById('langToggle').addEventListener('click', () => {
+      setLang(currentLang === 'en' ? 'de' : 'en');
+    });
+
+    if (currentLang !== 'en') setLang(currentLang);
   </script>
 
 </body>
