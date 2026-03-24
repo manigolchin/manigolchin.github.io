@@ -119,6 +119,13 @@
     }
     .nav-links a:hover { color: var(--text-primary); }
 
+    .nav-back {
+      display: inline-flex; align-items: center; gap: 0.375rem;
+      font-size: 0.875rem; font-weight: 500; color: var(--text-secondary);
+    }
+    .nav-back:hover { color: var(--text-primary); }
+    .nav-back svg { width: 16px; height: 16px; }
+
     .lang-toggle {
       display: flex;
       align-items: center;
@@ -754,25 +761,15 @@
   <nav class="nav" id="nav">
     <div class="nav-inner">
       <a href="../index.html" class="nav-logo" style="text-decoration: none;">mani<span>.</span>work</a>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#overview" data-i18n="nav.overview">Overview</a></li>
-        <li><a href="#pipeline" data-i18n="nav.pipeline">How It Works</a></li>
-        <li><a href="#features" data-i18n="nav.features">Features</a></li>
-        <li><a href="#tech" data-i18n="nav.tech">Tech Stack</a></li>
-        <li><a href="#screenshots" data-i18n="nav.screenshots">Screenshots</a></li>
-      </ul>
-      <div style="display:flex;align-items:center;gap:0.75rem;">
+      <div style="display:flex;align-items:center;gap:1rem;">
+        <a href="../index.html#projects" class="nav-back" data-i18n="nav.back">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="15 18 9 12 15 6"/></svg>
+          Back to Portfolio
+        </a>
         <button class="lang-toggle" id="langToggle" aria-label="Switch language">
           <span class="lang-option active" data-lang="en">EN</span>
           <span class="lang-divider">/</span>
           <span class="lang-option" data-lang="de">DE</span>
-        </button>
-        <button class="nav-mobile-toggle" id="navToggle" aria-label="Toggle menu">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <line x1="3" y1="6" x2="21" y2="6"/>
-            <line x1="3" y1="12" x2="21" y2="12"/>
-            <line x1="3" y1="18" x2="21" y2="18"/>
-          </svg>
         </button>
       </div>
     </div>
@@ -1287,18 +1284,6 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
-    // Mobile nav toggle
-    const navToggle = document.getElementById('navToggle');
-    const navLinks = document.getElementById('navLinks');
-    navToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('open');
-    });
-    navLinks.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        navLinks.classList.remove('open');
-      });
-    });
-
     // Intersection Observer for reveal animations
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!prefersReducedMotion) {
@@ -1351,6 +1336,7 @@
     // i18n Language Toggle
     const translations = {
       en: {
+        'nav.back': 'Back to Portfolio',
         'nav.overview': 'Overview',
         'nav.pipeline': 'How It Works',
         'nav.features': 'Features',
@@ -1442,6 +1428,7 @@
         'cta.btn': 'Back to Portfolio'
       },
       de: {
+        'nav.back': 'Zurück zum Portfolio',
         'nav.overview': '\u00dcberblick',
         'nav.pipeline': 'So funktioniert es',
         'nav.features': 'Funktionen',
